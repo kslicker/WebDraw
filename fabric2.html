@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fabric Test</title>
+        </head>
+        <script src="https://unpkg.com/fabric@5.3.0/dist/fabric.min.js"></script>
+    <body>
+        <canvas id="canvas", width="400", height="400"></canvas>
+        <button type="button" id="clear">Clear</button>
+      <script>
+        // Variables
+        var pendown = false;
+
+        // Setup canvas and draw rectangle
+        var canvas = new fabric.Canvas('canvas');
+        var rect = new fabric.Rect({
+            width: 10, height: 20,
+            left: 100, top: 100,
+            fill: 'black',
+            angle: 30});
+        canvas.add(rect);
+
+        // Event listener for drawing
+        // Mouse Down Event
+        canvas.on('mouse:down', function(options) {
+            mousedown = true;
+
+            var brush = new fabric.PencilBrush(canvas);
+                brush.onMouseDown(pointer);
+                canvas.freeDrawingBrush = brush;
+                canvas.isDrawingMode = true;
+
+            var circle = new fabric.Circle({
+                left: options.e.clientX - 10,
+                top: options.e.clientY - 10,
+                radius: 10
+            });
+            canvas.add(circle);
+        });
+
+        // Mouse Move Event
+        canvas.on('mouse:move', function(options) {
+            if (mousedown){
+                var circle2 = new fabric.Circle({
+                left: options.e.clientX - 10,
+                top: options.e.clientY - 10,
+                radius: 10
+            });
+            canvas.add(circle2);
+            }
+            });
+        
+        // Mouse Up Event
+        canvas.on('mouse:up', function(option){
+            mousedown = false;
+        })
+
+        // Clear canvas
+        document.getElementById('clear').addEventListener('click', function() {
+            canvas.clear();
+        })
+      </script>
+    </body>
+</html>
+  
